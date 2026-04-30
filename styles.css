@@ -730,17 +730,22 @@ body.crt-off .sidebar__social .crt-toggle {
   text-shadow: none;
 }
 
-/* === CRT monitor bezel — rounded "screen" + vignette === */
+/* === CRT monitor bezel — pronounced rounded screen + vignette + phosphor edge === */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 110;
-  border-radius: clamp(16px, 2.2vw, 28px);
+  border-radius: clamp(32px, 5vw, 64px);
   box-shadow:
-    inset 0 0 80px rgba(0, 0, 0, 0.7),
-    inset 0 0 220px rgba(0, 30, 15, 0.45),
+    /* thin phosphor line at the screen edge — gives the "alive screen" feel */
+    inset 0 0 0 1px rgba(204, 255, 0, 0.18),
+    /* strong dark vignette around edges for CRT depth */
+    inset 0 0 120px rgba(0, 0, 0, 0.85),
+    /* subtle inner phosphor warmth */
+    inset 0 0 260px rgba(204, 255, 0, 0.04),
+    /* outer "case" — fills everything outside the rounded shape with pure black */
     0 0 0 100vmax #000;
 }
 
@@ -1091,12 +1096,11 @@ body::before {
   z-index: 80;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.22),
-    rgba(0, 0, 0, 0.22) 1px,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.55) 1px,
     transparent 1px,
-    transparent 2px
+    transparent 3px
   );
-  mix-blend-mode: multiply;
 }
 
 /* === Phosphor glow on accent text === */
