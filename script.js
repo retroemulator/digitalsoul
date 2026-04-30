@@ -207,7 +207,7 @@
     if (showPicker) {
       html +=
         '<div class="bootup__picker">' +
-          '<p class="bootup__picker-prompt">[ ! ] SELECT LANGUAGE / SELEZIONA LINGUA</p>' +
+          '<p class="bootup__picker-prompt">[ ! ] SELECT LANGUAGE</p>' +
           '<div class="bootup__picker-options">' +
             '<button type="button" class="bootup__lang" data-lang="en">' +
               '<span class="bootup__lang-key">[ 1 ]</span>' +
