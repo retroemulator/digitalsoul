@@ -170,9 +170,56 @@
     });
   };
 
+  /* === 6. Boot-up sequence (once per session) === */
+  const initBootUp = () => {
+    if (reduceMotion.matches) return;
+    try {
+      if (sessionStorage.getItem('digitalsoul-booted') === '1') return;
+    } catch (e) { /* sessionStorage may be unavailable */ }
+
+    const overlay = document.createElement('div');
+    overlay.className = 'bootup';
+    overlay.setAttribute('aria-hidden', 'true');
+    overlay.innerHTML =
+      '<pre class="bootup__lines">' +
+        '<span class="bootup__line">&gt; INITIALIZING DIGITAL_SOUL.OS v2.6 ...</span>' +
+        '<span class="bootup__line">&gt; LOADING USER PROFILE: LUCA_ZERBINATI &nbsp;[OK]</span>' +
+        '<span class="bootup__line">&gt; MOUNTING MODULES: SAP / FRONTEND / MUSIC / PHOTO &nbsp;[OK]</span>' +
+        '<span class="bootup__line">&gt; ESTABLISHING UPLINK ............ [OK]</span>' +
+        '<span class="bootup__line">&gt; CALIBRATING PHOSPHOR DISPLAY .... [OK]</span>' +
+        '<span class="bootup__line">&gt; SYSTEM ONLINE_</span>' +
+      '</pre>' +
+      '<span class="bootup__hint">click anywhere to continue</span>';
+    document.body.appendChild(overlay);
+    document.body.style.overflow = 'hidden';
+
+    let dismissed = false;
+    const dismiss = () => {
+      if (dismissed) return;
+      dismissed = true;
+      overlay.classList.add('is-fading');
+      setTimeout(() => {
+        if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        document.body.style.overflow = '';
+      }, 450);
+      try { sessionStorage.setItem('digitalsoul-booted', '1'); } catch (e) {}
+    };
+
+    overlay.addEventListener('click', dismiss);
+    const onKey = (e) => {
+      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+        dismiss();
+        document.removeEventListener('keydown', onKey);
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    setTimeout(dismiss, 3000);
+  };
+
   /* === Boot === */
   onReady(() => {
     document.body.classList.add('js-ready');
+    initBootUp();
     initActiveNav();
     initSpotlight();
     initLightbox();
