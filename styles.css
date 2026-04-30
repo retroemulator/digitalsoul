@@ -1122,6 +1122,77 @@ main a:focus-visible {
   .cursor-blink { animation: none; }
 }
 
+/* === Power-on screen (pre-boot, unlocks audio) === */
+.powerup {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  /* Force CRT phosphor visuals on the power-on screen too */
+  --color-phosphor-glow: 0 0 8px rgba(204, 255, 0, 0.45);
+  --color-phosphor-glow-soft: 0 0 6px rgba(204, 255, 0, 0.25);
+  opacity: 1;
+  transition: opacity 280ms ease;
+}
+.powerup.is-fading { opacity: 0; pointer-events: none; }
+.powerup::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.22),
+    rgba(0, 0, 0, 0.22) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+.powerup__button {
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  color: var(--color-accent);
+  text-shadow: var(--color-phosphor-glow);
+  font-family: var(--font-mono);
+  font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+  letter-spacing: 0.2em;
+  padding: 1.4rem 2.8rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+.powerup__button:hover,
+.powerup__button:focus-visible {
+  background: var(--color-accent-glow);
+  box-shadow: 0 0 30px var(--color-accent-glow);
+  transform: translateY(-2px);
+  outline: none;
+}
+.powerup__button:active {
+  transform: translateY(0);
+}
+.powerup__hint {
+  position: relative;
+  z-index: 2;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-fg-subtle);
+  margin: 0;
+  text-align: center;
+}
+
 /* === Boot-up sequence (Pip-Boy style) === */
 .bootup {
   position: fixed;

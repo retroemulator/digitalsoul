@@ -176,7 +176,27 @@
     });
   };
 
-  /* === 6. Boot-up sequence + first-visit language picker === */
+  /* === 6. Boot-up sequence + power-on + first-visit language picker === */
+  const HDD_AUDIO_SRC = '/assets/audio/hdd-loop.mp3';
+
+  const fadeAudio = (audio, fromVol, toVol, durationMs, onDone) => {
+    if (!audio) { if (onDone) onDone(); return; }
+    const steps = Math.max(1, Math.round(durationMs / 30));
+    const delta = (toVol - fromVol) / steps;
+    let i = 0;
+    audio.volume = Math.max(0, Math.min(1, fromVol));
+    const tick = setInterval(() => {
+      i += 1;
+      let v = fromVol + delta * i;
+      v = Math.max(0, Math.min(1, v));
+      try { audio.volume = v; } catch (e) {}
+      if (i >= steps) {
+        clearInterval(tick);
+        if (onDone) onDone();
+      }
+    }, 30);
+  };
+
   const initBootUp = () => {
     if (reduceMotion.matches) return;
 
@@ -190,6 +210,64 @@
     const showPicker = !langStored;
     if (sessionBooted && !showPicker) return;
 
+    document.body.classList.add('bootup-active');
+    document.body.style.overflow = 'hidden';
+
+    /* === Phase 1: POWER ON pre-screen (required for audio autoplay unlock) === */
+    const powerup = document.createElement('div');
+    powerup.className = 'powerup';
+    powerup.setAttribute('aria-hidden', 'true');
+    powerup.innerHTML =
+      '<button type="button" class="powerup__button" autofocus>[ POWER ON ]</button>' +
+      '<p class="powerup__hint">click to boot &nbsp;·&nbsp; clicca per accendere</p>';
+    document.body.appendChild(powerup);
+
+    const startBoot = () => {
+      // Remove power-on screen with fade
+      powerup.classList.add('is-fading');
+      setTimeout(() => { if (powerup.parentNode) powerup.parentNode.removeChild(powerup); }, 280);
+
+      // Try to play HDD audio (silently fail if file missing or autoplay blocked)
+      let audio = null;
+      try {
+        audio = new Audio(HDD_AUDIO_SRC);
+        audio.loop = true;
+        audio.volume = 0;
+        const playPromise = audio.play();
+        if (playPromise && typeof playPromise.then === 'function') {
+          playPromise.then(() => {
+            fadeAudio(audio, 0, 0.4, 250);
+          }).catch(() => { audio = null; });
+        }
+      } catch (e) { audio = null; }
+
+      // Schedule audio fade-out shortly before boot ends / picker stabilizes
+      const audioFadeAt = showPicker ? 2700 : 3500;
+      setTimeout(() => {
+        if (!audio) return;
+        fadeAudio(audio, audio.volume, 0, 600, () => {
+          try { audio.pause(); audio.src = ''; } catch (e) {}
+        });
+      }, audioFadeAt);
+
+      showBootupOverlay();
+    };
+
+    const onPowerKey = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        startBoot();
+        document.removeEventListener('keydown', onPowerKey);
+      }
+    };
+    powerup.querySelector('.powerup__button').addEventListener('click', () => {
+      startBoot();
+      document.removeEventListener('keydown', onPowerKey);
+    });
+    document.addEventListener('keydown', onPowerKey);
+
+    /* === Phase 2: Boot-up overlay (existing logic, extracted) === */
+    const showBootupOverlay = () => {
     const overlay = document.createElement('div');
     overlay.className = 'bootup' + (showPicker ? ' bootup--picker' : '');
     overlay.setAttribute('aria-hidden', 'true');
@@ -226,8 +304,6 @@
 
     overlay.innerHTML = html;
     document.body.appendChild(overlay);
-    document.body.style.overflow = 'hidden';
-    document.body.classList.add('bootup-active');
 
     let dismissed = false;
     const dismiss = () => {
@@ -282,6 +358,7 @@
       document.addEventListener('keydown', onKey);
       setTimeout(dismiss, 4000);
     }
+    };
   };
 
   /* === Boot === */
