@@ -180,7 +180,7 @@
     sections.forEach((section) => observer.observe(section));
   };
 
-  /* === 5. CRT toggle (default ON; click disables all CRT visuals; persisted) === */
+  /* === 5. CRT toggle (default ON; click disables all CRT visuals; persisted; supports multiple toggles in sync) === */
   const initCrt = () => {
     let crtOff = false;
     let everClicked = false;
@@ -191,15 +191,19 @@
     } catch (e) {}
     if (crtOff) document.body.classList.add('crt-off');
 
-    const button = document.querySelector('.crt-toggle');
-    if (!button) return;
-    if (crtOff) button.setAttribute('aria-pressed', 'false');
-    if (!everClicked) button.classList.add('crt-toggle--attention');
-    button.addEventListener('click', () => {
-      const off = document.body.classList.toggle('crt-off');
-      button.setAttribute('aria-pressed', off ? 'false' : 'true');
-      button.classList.remove('crt-toggle--attention');
-      try { localStorage.setItem('digitalsoul-crt', off ? 'off' : 'on'); } catch (e) {}
+    const buttons = document.querySelectorAll('.crt-toggle');
+    if (!buttons.length) return;
+    buttons.forEach((button) => {
+      if (crtOff) button.setAttribute('aria-pressed', 'false');
+      if (!everClicked) button.classList.add('crt-toggle--attention');
+      button.addEventListener('click', () => {
+        const off = document.body.classList.toggle('crt-off');
+        buttons.forEach((b) => {
+          b.setAttribute('aria-pressed', off ? 'false' : 'true');
+          b.classList.remove('crt-toggle--attention');
+        });
+        try { localStorage.setItem('digitalsoul-crt', off ? 'off' : 'on'); } catch (e) {}
+      });
     });
   };
 

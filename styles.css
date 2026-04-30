@@ -703,8 +703,8 @@ strong {
   color: var(--color-fg-muted);
   font-weight: 500;
 }
-/* === CRT toggle button (in sidebar, lime by default to stand out) === */
-.sidebar__social .crt-toggle {
+/* === CRT toggle button (lime by default; works in sidebar, resume back area, etc.) === */
+.crt-toggle {
   background: none;
   border: 0;
   padding: 0;
@@ -716,21 +716,21 @@ strong {
   cursor: pointer;
   transition: color var(--transition-fast), transform var(--transition-fast);
 }
-.sidebar__social .crt-toggle:hover,
-.sidebar__social .crt-toggle:focus-visible {
+.crt-toggle:hover,
+.crt-toggle:focus-visible {
   color: var(--color-accent-hover);
   transform: translateY(-2px);
 }
-.sidebar__social .crt-toggle svg {
+.crt-toggle svg {
   width: 1.5rem;
   height: 1.5rem;
 }
-body.crt-off .sidebar__social .crt-toggle {
+body.crt-off .crt-toggle {
   color: var(--color-fg-muted);
   text-shadow: none;
 }
 /* Attention animation: a clear, multi-bounce pulse until the user clicks the toggle for the first time */
-.sidebar__social .crt-toggle--attention {
+.crt-toggle--attention {
   animation: crt-toggle-attention 2.4s ease-out infinite;
 }
 @keyframes crt-toggle-attention {
@@ -756,7 +756,7 @@ body.crt-off .sidebar__social .crt-toggle {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sidebar__social .crt-toggle--attention { animation: none; }
+  .crt-toggle--attention { animation: none; }
 }
 
 /* === CRT OFF: disable scanlines and phosphor glow on the site === */
@@ -848,6 +848,14 @@ body.crt-off .cursor-blink {
   margin: 4rem 0 0;
   padding-top: 2rem;
   border-top: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.resume__back--bottom a {
+  margin: 0;
 }
 
 .resume__header {
