@@ -3,16 +3,18 @@
 
 /* === Design tokens === */
 :root {
-  /* Colors */
-  --color-bg: #0A0A0F;
-  --color-bg-elevated: #11111A;
-  --color-fg: #E6E6E6;
-  --color-fg-muted: #8B8B8B;
-  --color-fg-subtle: #555560;
+  /* Colors — Pip-Boy phosphor CRT palette */
+  --color-bg: #0A1410;
+  --color-bg-elevated: #0E1B15;
+  --color-fg: #DDE8DD;
+  --color-fg-muted: #859585;
+  --color-fg-subtle: #4A5A50;
   --color-accent: #CCFF00;
   --color-accent-hover: #DDFF33;
-  --color-accent-glow: rgba(204, 255, 0, 0.15);
-  --color-border: #1F1F2A;
+  --color-accent-glow: rgba(204, 255, 0, 0.18);
+  --color-phosphor-glow: 0 0 8px rgba(204, 255, 0, 0.45);
+  --color-phosphor-glow-soft: 0 0 6px rgba(204, 255, 0, 0.25);
+  --color-border: #1E2A24;
 
   /* Typography */
   --font-display: 'Space Grotesk', system-ui, sans-serif;
@@ -332,7 +334,7 @@ strong {
   color: var(--color-fg);
   margin: 0 0 1.5rem;
   padding: 1rem 0;
-  background: rgba(10, 10, 15, 0.85);
+  background: rgba(10, 20, 16, 0.85);
   backdrop-filter: blur(8px);
 }
 @media (min-width: 1024px) {
@@ -612,7 +614,7 @@ strong {
 .lightbox {
   position: fixed;
   inset: 0;
-  background: rgba(10, 10, 15, 0.92);
+  background: rgba(10, 20, 16, 0.92);
   display: none;
   align-items: center;
   justify-content: center;
@@ -818,4 +820,58 @@ body.has-spotlight .spotlight {
 }
 @media (prefers-reduced-motion: reduce) {
   .spotlight { display: none; }
+}
+
+/* === CRT phosphor screen — subtle scanlines always on === */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 80;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.08),
+    rgba(0, 0, 0, 0.08) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  mix-blend-mode: multiply;
+}
+
+/* === Phosphor glow on accent text === */
+.sidebar__alias span,
+.tags li {
+  text-shadow: var(--color-phosphor-glow-soft);
+}
+main a:hover,
+main a:focus-visible {
+  text-shadow: var(--color-phosphor-glow-soft);
+}
+.cursor-blink {
+  display: inline-block;
+  margin-left: 0.15em;
+  color: var(--color-accent);
+  text-shadow: var(--color-phosphor-glow);
+  animation: cursor-blink 1.1s steps(2, jump-none) infinite;
+}
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-blink { animation: none; }
+}
+
+/* === Terminal bracket styling on mobile sticky headings === */
+@media (max-width: 1023px) {
+  .section__heading--sticky-mobile::before {
+    content: "[ ";
+    color: var(--color-accent);
+    text-shadow: var(--color-phosphor-glow-soft);
+  }
+  .section__heading--sticky-mobile::after {
+    content: " ]";
+    color: var(--color-accent);
+    text-shadow: var(--color-phosphor-glow-soft);
+  }
 }
