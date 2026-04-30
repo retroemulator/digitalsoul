@@ -15,10 +15,9 @@
     }
   };
 
-  /* === 1. Active section detection (IntersectionObserver) === */
+  /* === 1. Active section detection (scroll-anchor based) === */
   const initActiveNav = () => {
-    if (!('IntersectionObserver' in window)) return;
-    const sections = document.querySelectorAll('main .section[id]');
+    const sections = Array.from(document.querySelectorAll('main .section[id]'));
     const navLinks = document.querySelectorAll('.sidebar__nav .nav-link');
     if (!sections.length || !navLinks.length) return;
 
@@ -34,23 +33,44 @@
       if (active) active.classList.add('is-active');
     };
 
-    const visible = new Map();
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        visible.set(entry.target.id, entry.intersectionRatio);
-      });
-      let topId = null;
-      let topRatio = 0;
-      visible.forEach((ratio, id) => {
-        if (ratio > topRatio) { topRatio = ratio; topId = id; }
-      });
-      if (topId && topRatio > 0) setActive(topId);
-    }, {
-      rootMargin: '-30% 0px -50% 0px',
-      threshold: [0, 0.1, 0.25, 0.5, 0.75, 1]
-    });
+    let pending = false;
+    const update = () => {
+      pending = false;
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const viewport = window.innerHeight;
+      const docHeight = Math.max(
+        document.documentElement.scrollHeight,
+        document.body.scrollHeight
+      );
 
-    sections.forEach((section) => observer.observe(section));
+      // Near bottom: force last section active so Foto highlights when scrolled all the way down
+      if (scrollY + viewport >= docHeight - 40) {
+        setActive(sections[sections.length - 1].id);
+        return;
+      }
+
+      // Otherwise: pick the most-recent section whose top has crossed the 30%-from-top anchor line
+      const anchor = scrollY + viewport * 0.30;
+      let activeId = sections[0].id;
+      for (let i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= anchor) {
+          activeId = sections[i].id;
+        } else {
+          break;
+        }
+      }
+      setActive(activeId);
+    };
+
+    const onScroll = () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(update);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
   };
 
   /* === 2. Spotlight cursor === */
