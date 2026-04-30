@@ -817,6 +817,11 @@ body.crt-off .cursor-blink {
   margin: 0 0 2.5rem;
 }
 .resume__topbar .resume__back { margin: 0; }
+.resume__topbar-end {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
 
 /* === Resume page === */
 .resume-page {
