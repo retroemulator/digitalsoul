@@ -227,6 +227,7 @@
     overlay.innerHTML = html;
     document.body.appendChild(overlay);
     document.body.style.overflow = 'hidden';
+    document.body.classList.add('bootup-active');
 
     let dismissed = false;
     const dismiss = () => {
@@ -236,6 +237,7 @@
       setTimeout(() => {
         if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
         document.body.style.overflow = '';
+        document.body.classList.remove('bootup-active');
       }, 450);
       try { sessionStorage.setItem('digitalsoul-booted', '1'); } catch (e) {}
     };
