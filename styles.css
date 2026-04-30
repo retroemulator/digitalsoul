@@ -721,6 +721,20 @@ body.crt-mode::after {
   body.crt-mode::after { animation: none; }
 }
 
+/* === Scroll-triggered fade-in (only when JS is active) === */
+.section { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  body.js-ready .section:not(.is-visible) {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  body.js-ready .section.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: opacity 600ms ease, transform 600ms ease;
+  }
+}
+
 /* === Inline links inside main === */
 main a {
   color: var(--color-accent);
