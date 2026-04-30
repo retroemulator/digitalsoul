@@ -1191,7 +1191,7 @@ main a:focus-visible {
   font-size: 0.75rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-fg-subtle);
+  color: var(--color-fg);
   margin: 0;
   text-align: center;
 }
