@@ -551,6 +551,25 @@ strong {
   margin: 0;
 }
 
+/* === Mix embeds === */
+.mix-embeds {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.mix-embeds__iframe {
+  width: 100%;
+  height: 9.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-bg-elevated);
+  transition: border-color var(--transition-default);
+}
+.mix-embeds__iframe:hover {
+  border-color: var(--color-accent);
+}
+
 /* === Inline links inside main === */
 main a {
   color: var(--color-accent);
