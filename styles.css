@@ -729,33 +729,30 @@ body.crt-off .sidebar__social .crt-toggle {
   color: var(--color-fg-muted);
   text-shadow: none;
 }
-
-/* === CRT monitor bezel — pronounced rounded screen + vignette + phosphor edge === */
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 110;
-  border-radius: clamp(32px, 5vw, 64px);
-  box-shadow:
-    /* thin phosphor line at the screen edge — gives the "alive screen" feel */
-    inset 0 0 0 1px rgba(204, 255, 0, 0.18),
-    /* strong dark vignette around edges for CRT depth */
-    inset 0 0 120px rgba(0, 0, 0, 0.85),
-    /* subtle inner phosphor warmth */
-    inset 0 0 260px rgba(204, 255, 0, 0.04),
-    /* outer "case" — fills everything outside the rounded shape with pure black */
-    0 0 0 100vmax #000;
+/* Attention animation: pulses until the user clicks the toggle for the first time */
+.sidebar__social .crt-toggle--attention {
+  animation: crt-toggle-attention 1.6s ease-in-out infinite;
+}
+@keyframes crt-toggle-attention {
+  0%, 100% {
+    transform: translateY(0);
+    text-shadow: var(--color-phosphor-glow-soft);
+  }
+  50% {
+    transform: translateY(-4px);
+    text-shadow: var(--color-phosphor-glow), 0 0 16px rgba(204, 255, 0, 0.5);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sidebar__social .crt-toggle--attention { animation: none; }
 }
 
-/* === CRT OFF: nullify all CRT visuals === */
+/* === CRT OFF: disable scanlines and phosphor glow on the site === */
 body.crt-off {
   --color-phosphor-glow: none;
   --color-phosphor-glow-soft: none;
 }
-body.crt-off::before,
-body.crt-off::after {
+body.crt-off::before {
   display: none;
 }
 body.crt-off .cursor-blink {
@@ -1236,44 +1233,43 @@ main a:focus-visible {
   color: var(--color-accent);
   text-shadow: var(--color-phosphor-glow);
 }
-/* While the boot-up is active, restore the rounded CRT bezel even if CRT is toggled off */
-body.crt-off.bootup-active::after {
-  display: block;
-}
-
-/* Boot-up: convex CRT illusion via the bezel itself
-   (bezel is z-110, OVER the boot content — its background gradient paints the
-    whole rounded screen area with a strong vignette: bright center, dark edges) */
-body.bootup-active::after {
-  border-radius: clamp(56px, 9vw, 120px);
+/* === Boot-up "screen" — convex curved phosphor display around the content === */
+.bootup__screen {
+  position: relative;
+  z-index: 3;
+  max-width: 48rem;
+  width: 100%;
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem);
+  border-radius: clamp(40px, 6vw, 80px);
   background: radial-gradient(
-    ellipse 100% 100% at center,
-    rgba(204, 255, 0, 0.05) 0%,
+    ellipse 95% 100% at center,
+    rgba(204, 255, 0, 0.07) 0%,
     transparent 22%,
-    rgba(0, 0, 0, 0.30) 55%,
-    rgba(0, 0, 0, 0.65) 80%,
-    rgba(0, 0, 0, 0.92) 100%
+    rgba(0, 0, 0, 0.25) 55%,
+    rgba(0, 0, 0, 0.6) 82%,
+    rgba(0, 0, 0, 0.85) 100%
   );
   box-shadow:
-    /* glowing lime edge ring marking the screen boundary */
+    /* glowing lime edge ring — the "phosphor alive" screen boundary */
     inset 0 0 0 2px rgba(204, 255, 0, 0.45),
     inset 0 0 0 6px rgba(204, 255, 0, 0.12),
-    /* outer "case" — fills outside the rounded shape with pure black */
-    0 0 0 100vmax #000;
+    /* inner soft dark to enhance the convex feel */
+    inset 0 0 80px rgba(0, 0, 0, 0.55),
+    /* outer drop shadow lifting the screen off the dark bg */
+    0 24px 60px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(204, 255, 0, 0.06);
 }
-
-/* Top-center highlight on boot-up content layer — like glass catching room light */
-.bootup::after,
-.powerup::after {
+/* Glass highlight at top-center of the screen — sells the convex glass illusion */
+.bootup__screen::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  z-index: 2;
+  border-radius: inherit;
   background: radial-gradient(
-    ellipse 70% 28% at 50% -5%,
-    rgba(204, 255, 0, 0.10),
-    transparent 65%
+    ellipse 65% 26% at 50% -2%,
+    rgba(204, 255, 0, 0.12),
+    transparent 70%
   );
 }
 .bootup.is-fading { opacity: 0; pointer-events: none; }
@@ -1321,8 +1317,7 @@ body.bootup-active::after {
 .bootup__picker {
   margin-top: 2.5rem;
   width: 100%;
-  max-width: 32rem;
-  text-align: center;
+  text-align: left;
 }
 .bootup__picker-prompt {
   font-family: var(--font-mono);
@@ -1354,7 +1349,7 @@ body.bootup-active::after {
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
   transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast), text-shadow var(--transition-fast), transform var(--transition-fast);
 }

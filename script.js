@@ -183,15 +183,22 @@
   /* === 5. CRT toggle (default ON; click disables all CRT visuals; persisted) === */
   const initCrt = () => {
     let crtOff = false;
-    try { crtOff = localStorage.getItem('digitalsoul-crt') === 'off'; } catch (e) {}
+    let everClicked = false;
+    try {
+      const stored = localStorage.getItem('digitalsoul-crt');
+      crtOff = stored === 'off';
+      everClicked = stored !== null;
+    } catch (e) {}
     if (crtOff) document.body.classList.add('crt-off');
 
     const button = document.querySelector('.crt-toggle');
     if (!button) return;
     if (crtOff) button.setAttribute('aria-pressed', 'false');
+    if (!everClicked) button.classList.add('crt-toggle--attention');
     button.addEventListener('click', () => {
       const off = document.body.classList.toggle('crt-off');
       button.setAttribute('aria-pressed', off ? 'false' : 'true');
+      button.classList.remove('crt-toggle--attention');
       try { localStorage.setItem('digitalsoul-crt', off ? 'off' : 'on'); } catch (e) {}
     });
   };
@@ -292,7 +299,7 @@
     overlay.className = 'bootup' + (showPicker ? ' bootup--picker' : '');
     overlay.setAttribute('aria-hidden', 'true');
 
-    let html =
+    let inner =
       '<pre class="bootup__lines">' +
         '<span class="bootup__line">&gt; INITIALIZING DIGITAL_SOUL.OS v2.6 ...</span>' +
         '<span class="bootup__line">&gt; LOADING USER PROFILE: LUCA_PORFIDO &nbsp;[OK]</span>' +
@@ -303,7 +310,7 @@
       '</pre>';
 
     if (showPicker) {
-      html +=
+      inner +=
         '<div class="bootup__picker">' +
           '<p class="bootup__picker-prompt">[ ! ] SELECT LANGUAGE</p>' +
           '<div class="bootup__picker-options">' +
@@ -319,10 +326,10 @@
           '<p class="bootup__picker-hint">press 1 / 2 or click  ·  premi 1 / 2 o clicca</p>' +
         '</div>';
     } else {
-      html += '<span class="bootup__hint">click anywhere to continue</span>';
+      inner += '<span class="bootup__hint">click anywhere to continue</span>';
     }
 
-    overlay.innerHTML = html;
+    overlay.innerHTML = '<div class="bootup__screen">' + inner + '</div>';
     document.body.appendChild(overlay);
 
     let dismissed = false;
