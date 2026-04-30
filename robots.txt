@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://digitalsoul-portfolio.vercel.app/sitemap.xml
+Sitemap: https://digitalsoul.vercel.app/sitemap.xml
