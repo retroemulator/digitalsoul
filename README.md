@@ -1,6 +1,6 @@
 # DiGiT@L SouL — Personal Portfolio
 
-Personal portfolio of **Luca Zerbinati** (aka **DiGiT@L SouL**) — IT Consultant, SAP Analyst, Web Developer, Photographer, DJ.
+Personal portfolio of **Luca Porfido** (aka **DiGiT@L SouL**) — IT Consultant, SAP Analyst, Web Developer, Photographer, DJ.
 
 ## Stack
 
