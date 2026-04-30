@@ -160,13 +160,13 @@
     sections.forEach((section) => observer.observe(section));
   };
 
-  /* === 5. Easter egg (CRT mode) === */
-  const initEasterEgg = () => {
-    const button = document.querySelector('.footer__easter-egg');
+  /* === 5. CRT toggle (default ON; click disables all CRT visuals) === */
+  const initCrtToggle = () => {
+    const button = document.querySelector('.crt-toggle');
     if (!button) return;
     button.addEventListener('click', () => {
-      const enabled = document.body.classList.toggle('crt-mode');
-      button.setAttribute('aria-pressed', enabled ? 'true' : 'false');
+      const off = document.body.classList.toggle('crt-off');
+      button.setAttribute('aria-pressed', off ? 'false' : 'true');
     });
   };
 
@@ -224,6 +224,6 @@
     initSpotlight();
     initLightbox();
     initFadeIn();
-    initEasterEgg();
+    initCrtToggle();
   });
 })();
