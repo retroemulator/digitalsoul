@@ -655,6 +655,72 @@ strong {
   border-color: var(--color-accent);
 }
 
+/* === Footer === */
+.footer {
+  margin-top: var(--section-spacing);
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.footer__text {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-fg-subtle);
+  line-height: 1.6;
+  max-width: 28rem;
+  margin: 0;
+}
+.footer__text strong {
+  color: var(--color-fg-muted);
+  font-weight: 500;
+}
+.footer__easter-egg {
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-fg-subtle);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+}
+.footer__easter-egg:hover,
+.footer__easter-egg:focus-visible {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  transform: rotate(-8deg);
+}
+
+/* === CRT scanline mode (toggled via easter egg) === */
+body.crt-mode::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: 100;
+  mix-blend-mode: multiply;
+  animation: scanlines 8s linear infinite;
+}
+@keyframes scanlines {
+  from { background-position: 0 0; }
+  to { background-position: 0 -24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.crt-mode::after { animation: none; }
+}
+
 /* === Inline links inside main === */
 main a {
   color: var(--color-accent);
