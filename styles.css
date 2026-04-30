@@ -1241,23 +1241,28 @@ body.crt-off.bootup-active::after {
   display: block;
 }
 
-/* Boot-up gets a much more pronounced "convex Pip-Boy" curvature */
+/* Boot-up: convex CRT illusion via the bezel itself
+   (bezel is z-110, OVER the boot content — its background gradient paints the
+    whole rounded screen area with a strong vignette: bright center, dark edges) */
 body.bootup-active::after {
   border-radius: clamp(56px, 9vw, 120px);
+  background: radial-gradient(
+    ellipse 100% 100% at center,
+    rgba(204, 255, 0, 0.05) 0%,
+    transparent 22%,
+    rgba(0, 0, 0, 0.30) 55%,
+    rgba(0, 0, 0, 0.65) 80%,
+    rgba(0, 0, 0, 0.92) 100%
+  );
   box-shadow:
-    /* glowing lime edge ring around the simulated screen */
-    inset 0 0 0 2px rgba(204, 255, 0, 0.35),
-    inset 0 0 0 5px rgba(204, 255, 0, 0.1),
-    /* heavy darkening at edges to suggest the screen curving away */
-    inset 0 0 200px rgba(0, 0, 0, 0.95),
-    /* warm phosphor inner glow toward the center */
-    inset 0 0 380px rgba(204, 255, 0, 0.06),
+    /* glowing lime edge ring marking the screen boundary */
+    inset 0 0 0 2px rgba(204, 255, 0, 0.45),
+    inset 0 0 0 6px rgba(204, 255, 0, 0.12),
     /* outer "case" — fills outside the rounded shape with pure black */
     0 0 0 100vmax #000;
 }
 
-/* Convex curvature illusion: radial vignette over the boot-up content
-   (bright at center, fading dark at the corners — fishbowl effect) */
+/* Top-center highlight on boot-up content layer — like glass catching room light */
 .bootup::after,
 .powerup::after {
   content: "";
@@ -1265,18 +1270,11 @@ body.bootup-active::after {
   inset: 0;
   pointer-events: none;
   z-index: 2;
-  border-radius: inherit;
-  background:
-    /* subtle highlight at top-center, like glass catching light */
-    radial-gradient(ellipse 70% 35% at 50% -10%, rgba(204, 255, 0, 0.06), transparent 65%),
-    /* main convex vignette — bright center, dark edges */
-    radial-gradient(
-      ellipse 95% 105% at center,
-      transparent 0%,
-      transparent 45%,
-      rgba(0, 0, 0, 0.35) 80%,
-      rgba(0, 0, 0, 0.85) 100%
-    );
+  background: radial-gradient(
+    ellipse 70% 28% at 50% -5%,
+    rgba(204, 255, 0, 0.10),
+    transparent 65%
+  );
 }
 .bootup.is-fading { opacity: 0; pointer-events: none; }
 .bootup--picker { cursor: default; }
