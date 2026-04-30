@@ -1082,9 +1082,9 @@ main a:focus-visible {
   pointer-events: none;
   z-index: 30;
   background: radial-gradient(
-    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-    var(--color-accent-glow),
-    transparent 40%
+    420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(204, 255, 0, 0.06),
+    transparent 55%
   );
   opacity: 0;
   transition: opacity var(--transition-default);
