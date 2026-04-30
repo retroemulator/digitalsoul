@@ -759,6 +759,185 @@ body.crt-off .cursor-blink {
   text-shadow: none;
 }
 
+/* === Resume page === */
+.resume-page {
+  min-height: 100vh;
+}
+.resume {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 2rem);
+}
+.resume__back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0 0 2.5rem;
+}
+.resume__back a {
+  color: var(--color-fg-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.resume__back a:hover,
+.resume__back a:focus-visible {
+  color: var(--color-accent);
+  text-shadow: var(--color-phosphor-glow-soft);
+}
+.resume__back--bottom {
+  margin: 4rem 0 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.resume__header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.resume__name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.resume__alias {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-fg-muted);
+  margin: 0.25rem 0 1rem;
+}
+.resume__alias span {
+  color: var(--color-accent);
+  text-shadow: var(--color-phosphor-glow-soft);
+}
+.resume__role {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-fg);
+  margin: 0 0 0.75rem;
+}
+.resume__contact {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--color-fg-muted);
+  margin: 0;
+}
+.resume__contact a {
+  color: var(--color-fg-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+.resume__contact a:hover,
+.resume__contact a:focus-visible {
+  color: var(--color-accent);
+  text-shadow: var(--color-phosphor-glow-soft);
+}
+
+.resume__section {
+  margin-bottom: 3rem;
+}
+.resume__heading {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--color-accent);
+  margin: 0 0 1.25rem;
+  text-shadow: var(--color-phosphor-glow-soft);
+}
+.resume__heading::before { content: "[ "; color: var(--color-accent); }
+.resume__heading::after { content: " ]"; color: var(--color-accent); }
+
+.resume__body p {
+  color: var(--color-fg-muted);
+  margin: 0 0 1rem;
+}
+.resume__body p:last-child { margin-bottom: 0; }
+.resume__body strong { color: var(--color-fg); }
+
+.resume__bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.resume__bullets li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--color-fg-muted);
+  font-size: 0.95rem;
+}
+.resume__bullets li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+
+.resume__skills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.4rem 1rem;
+}
+@media (min-width: 600px) {
+  .resume__skills {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.resume__skills li {
+  position: relative;
+  padding-left: 1.25rem;
+  color: var(--color-fg-muted);
+  font-size: 0.95rem;
+}
+.resume__skills li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+}
+
+.resume__lang-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.resume__lang-list li {
+  color: var(--color-fg-muted);
+  font-size: 0.95rem;
+}
+.resume__lang-list strong {
+  color: var(--color-fg);
+  display: inline-block;
+  min-width: 6rem;
+}
+
+.experience-item__location {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--color-fg-subtle);
+  text-transform: uppercase;
+  margin: 0.25rem 0 0.5rem;
+}
+
 /* === 404 page === */
 .page-404 {
   display: flex;

@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://digitalsoul.vercel.app/</loc>
     <lastmod>2026-04-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitalsoul.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://digitalsoul.vercel.app/it/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://digitalsoul.vercel.app/"/>
+  </url>
+  <url>
+    <loc>https://digitalsoul.vercel.app/resume.html</loc>
+    <lastmod>2026-04-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://digitalsoul.vercel.app/resume.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://digitalsoul.vercel.app/it/resume.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://digitalsoul.vercel.app/resume.html"/>
   </url>
 </urlset>
