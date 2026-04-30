@@ -219,7 +219,7 @@
     powerup.setAttribute('aria-hidden', 'true');
     powerup.innerHTML =
       '<button type="button" class="powerup__button" autofocus>[ POWER ON ]</button>' +
-      '<p class="powerup__hint">click to boot &nbsp;·&nbsp; clicca per accendere</p>';
+      '<p class="powerup__hint">click to boot &nbsp;·&nbsp; clicca per avviare</p>';
     document.body.appendChild(powerup);
 
     const startBoot = () => {
