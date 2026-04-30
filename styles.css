@@ -729,18 +729,30 @@ body.crt-off .sidebar__social .crt-toggle {
   color: var(--color-fg-muted);
   text-shadow: none;
 }
-/* Attention animation: pulses until the user clicks the toggle for the first time */
+/* Attention animation: a clear, multi-bounce pulse until the user clicks the toggle for the first time */
 .sidebar__social .crt-toggle--attention {
-  animation: crt-toggle-attention 1.6s ease-in-out infinite;
+  animation: crt-toggle-attention 2.4s ease-out infinite;
 }
 @keyframes crt-toggle-attention {
-  0%, 100% {
+  0% {
     transform: translateY(0);
+    color: var(--color-accent);
     text-shadow: var(--color-phosphor-glow-soft);
   }
-  50% {
-    transform: translateY(-4px);
-    text-shadow: var(--color-phosphor-glow), 0 0 16px rgba(204, 255, 0, 0.5);
+  8% {
+    transform: translateY(-22px);
+    color: var(--color-accent-hover);
+    text-shadow: var(--color-phosphor-glow), 0 0 28px rgba(204, 255, 0, 0.75);
+  }
+  18% { transform: translateY(0); }
+  26% { transform: translateY(-12px); }
+  35% { transform: translateY(0); }
+  41% { transform: translateY(-5px); }
+  46% { transform: translateY(0); }
+  50%, 100% {
+    transform: translateY(0);
+    color: var(--color-accent);
+    text-shadow: var(--color-phosphor-glow-soft);
   }
 }
 @media (prefers-reduced-motion: reduce) {
