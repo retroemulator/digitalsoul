@@ -303,7 +303,7 @@
       '<pre class="bootup__lines">' +
         '<span class="bootup__line">&gt; INITIALIZING DIGITAL_SOUL.OS v2.6 ...</span>' +
         '<span class="bootup__line">&gt; LOADING USER PROFILE: LUCA_PORFIDO &nbsp;[OK]</span>' +
-        '<span class="bootup__line">&gt; MOUNTING MODULES: SAP / FRONTEND / MUSIC / PHOTO &nbsp;[OK]</span>' +
+        '<span class="bootup__line">&gt; MOUNTING MODULES: SAP / WEBDEV / MUSIC / PHOTO &nbsp;[OK]</span>' +
         '<span class="bootup__line">&gt; ESTABLISHING UPLINK ............ [OK]</span>' +
         '<span class="bootup__line">&gt; CALIBRATING PHOSPHOR DISPLAY .... [OK]</span>' +
         '<span class="bootup__line">&gt; SYSTEM ONLINE<span class="cursor-blink">_</span></span>' +
