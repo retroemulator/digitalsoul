@@ -151,3 +151,106 @@ strong {
   color: var(--color-fg);
   font-weight: 700;
 }
+
+/* === Layout (two columns on desktop) === */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: var(--sidebar-padding) 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.content {
+  padding: var(--sidebar-padding) 0;
+  max-width: var(--max-content-width);
+}
+
+@media (max-width: 1023px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0 1.5rem;
+  }
+  .sidebar {
+    position: static;
+    height: auto;
+    padding-bottom: 2rem;
+  }
+  .content {
+    max-width: 100%;
+    padding-top: 1rem;
+  }
+}
+
+/* === Sidebar top: name, alias, tagline, intro === */
+.sidebar__name {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.25rem;
+  color: var(--color-fg);
+}
+
+.sidebar__alias {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-fg-muted);
+  margin: 0 0 1.5rem;
+  letter-spacing: 0.02em;
+}
+.sidebar__alias span {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.sidebar__tagline {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-fg);
+  margin: 0 0 1.5rem;
+  line-height: 1.4;
+}
+
+.sidebar__intro {
+  font-size: 0.95rem;
+  color: var(--color-fg-muted);
+  max-width: 22rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* === Spotlight cursor (progressive enhancement) === */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--color-accent-glow),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-default);
+}
+body.has-spotlight .spotlight {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spotlight { display: none; }
+}
