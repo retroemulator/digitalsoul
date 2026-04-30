@@ -160,36 +160,71 @@
     sections.forEach((section) => observer.observe(section));
   };
 
-  /* === 5. CRT toggle (default ON; click disables all CRT visuals) === */
-  const initCrtToggle = () => {
+  /* === 5. CRT toggle (default ON; click disables all CRT visuals; persisted) === */
+  const initCrt = () => {
+    let crtOff = false;
+    try { crtOff = localStorage.getItem('digitalsoul-crt') === 'off'; } catch (e) {}
+    if (crtOff) document.body.classList.add('crt-off');
+
     const button = document.querySelector('.crt-toggle');
     if (!button) return;
+    if (crtOff) button.setAttribute('aria-pressed', 'false');
     button.addEventListener('click', () => {
       const off = document.body.classList.toggle('crt-off');
       button.setAttribute('aria-pressed', off ? 'false' : 'true');
+      try { localStorage.setItem('digitalsoul-crt', off ? 'off' : 'on'); } catch (e) {}
     });
   };
 
-  /* === 6. Boot-up sequence (once per session) === */
+  /* === 6. Boot-up sequence + first-visit language picker === */
   const initBootUp = () => {
     if (reduceMotion.matches) return;
+
+    let langStored = null;
+    let sessionBooted = false;
     try {
-      if (sessionStorage.getItem('digitalsoul-booted') === '1') return;
-    } catch (e) { /* sessionStorage may be unavailable */ }
+      langStored = localStorage.getItem('digitalsoul-lang');
+      sessionBooted = sessionStorage.getItem('digitalsoul-booted') === '1';
+    } catch (e) {}
+
+    const showPicker = !langStored;
+    if (sessionBooted && !showPicker) return;
 
     const overlay = document.createElement('div');
-    overlay.className = 'bootup';
+    overlay.className = 'bootup' + (showPicker ? ' bootup--picker' : '');
     overlay.setAttribute('aria-hidden', 'true');
-    overlay.innerHTML =
+
+    let html =
       '<pre class="bootup__lines">' +
         '<span class="bootup__line">&gt; INITIALIZING DIGITAL_SOUL.OS v2.6 ...</span>' +
-        '<span class="bootup__line">&gt; LOADING USER PROFILE: LUCA_ZERBINATI &nbsp;[OK]</span>' +
+        '<span class="bootup__line">&gt; LOADING USER PROFILE: LUCA_PORFIDO &nbsp;[OK]</span>' +
         '<span class="bootup__line">&gt; MOUNTING MODULES: SAP / FRONTEND / MUSIC / PHOTO &nbsp;[OK]</span>' +
         '<span class="bootup__line">&gt; ESTABLISHING UPLINK ............ [OK]</span>' +
         '<span class="bootup__line">&gt; CALIBRATING PHOSPHOR DISPLAY .... [OK]</span>' +
         '<span class="bootup__line">&gt; SYSTEM ONLINE_</span>' +
-      '</pre>' +
-      '<span class="bootup__hint">click anywhere to continue</span>';
+      '</pre>';
+
+    if (showPicker) {
+      html +=
+        '<div class="bootup__picker">' +
+          '<p class="bootup__picker-prompt">[ ! ] SELECT LANGUAGE / SELEZIONA LINGUA</p>' +
+          '<div class="bootup__picker-options">' +
+            '<button type="button" class="bootup__lang" data-lang="en">' +
+              '<span class="bootup__lang-key">[ 1 ]</span>' +
+              '<span class="bootup__lang-name">ENGLISH</span>' +
+            '</button>' +
+            '<button type="button" class="bootup__lang" data-lang="it">' +
+              '<span class="bootup__lang-key">[ 2 ]</span>' +
+              '<span class="bootup__lang-name">ITALIANO</span>' +
+            '</button>' +
+          '</div>' +
+          '<p class="bootup__picker-hint">press 1 / 2 or click  ·  premi 1 / 2 o clicca</p>' +
+        '</div>';
+    } else {
+      html += '<span class="bootup__hint">click anywhere to continue</span>';
+    }
+
+    overlay.innerHTML = html;
     document.body.appendChild(overlay);
     document.body.style.overflow = 'hidden';
 
@@ -205,25 +240,56 @@
       try { sessionStorage.setItem('digitalsoul-booted', '1'); } catch (e) {}
     };
 
-    overlay.addEventListener('click', dismiss);
-    const onKey = (e) => {
-      if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+    const choose = (lang) => {
+      try { localStorage.setItem('digitalsoul-lang', lang); } catch (e) {}
+      try { sessionStorage.setItem('digitalsoul-booted', '1'); } catch (e) {}
+
+      const currentLang = (document.documentElement.lang || 'en').toLowerCase();
+      if (lang === currentLang) {
         dismiss();
-        document.removeEventListener('keydown', onKey);
+        return;
+      }
+      const altLink = document.querySelector('link[hreflang="' + lang + '"]');
+      if (altLink && altLink.href) {
+        window.location.href = altLink.href;
+      } else {
+        dismiss();
       }
     };
-    document.addEventListener('keydown', onKey);
-    setTimeout(dismiss, 3000);
+
+    if (showPicker) {
+      overlay.querySelectorAll('.bootup__lang').forEach((btn) => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          choose(btn.dataset.lang);
+        });
+      });
+      const onKey = (e) => {
+        if (e.key === '1') { e.preventDefault(); choose('en'); }
+        else if (e.key === '2') { e.preventDefault(); choose('it'); }
+      };
+      document.addEventListener('keydown', onKey);
+    } else {
+      overlay.addEventListener('click', dismiss);
+      const onKey = (e) => {
+        if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+          dismiss();
+          document.removeEventListener('keydown', onKey);
+        }
+      };
+      document.addEventListener('keydown', onKey);
+      setTimeout(dismiss, 4000);
+    }
   };
 
   /* === Boot === */
   onReady(() => {
     document.body.classList.add('js-ready');
+    initCrt();
     initBootUp();
     initActiveNav();
     initSpotlight();
     initLightbox();
     initFadeIn();
-    initCrtToggle();
   });
 })();
