@@ -1148,12 +1148,11 @@ main a:focus-visible {
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.22),
-    rgba(0, 0, 0, 0.22) 1px,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.55) 1px,
     transparent 1px,
-    transparent 2px
+    transparent 3px
   );
-  mix-blend-mode: multiply;
   z-index: 1;
 }
 .powerup__button {
@@ -1220,12 +1219,11 @@ main a:focus-visible {
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.22),
-    rgba(0, 0, 0, 0.22) 1px,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.55) 1px,
     transparent 1px,
-    transparent 2px
+    transparent 3px
   );
-  mix-blend-mode: multiply;
   z-index: 1;
 }
 /* Force cursor blink inside boot-up regardless of CRT toggle */
