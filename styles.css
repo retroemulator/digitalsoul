@@ -1141,6 +1141,28 @@ main a:focus-visible {
   --color-phosphor-glow: 0 0 8px rgba(204, 255, 0, 0.45);
   --color-phosphor-glow-soft: 0 0 6px rgba(204, 255, 0, 0.25);
 }
+/* Scanlines specific to the boot-up overlay, always visible regardless of CRT toggle */
+.bootup::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.22),
+    rgba(0, 0, 0, 0.22) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  mix-blend-mode: multiply;
+  z-index: 1;
+}
+/* Force cursor blink inside boot-up regardless of CRT toggle */
+.bootup .cursor-blink {
+  animation: cursor-blink 1.1s steps(2, jump-none) infinite;
+  color: var(--color-accent);
+  text-shadow: var(--color-phosphor-glow);
+}
 /* While the boot-up is active, restore the rounded CRT bezel even if CRT is toggled off */
 body.crt-off.bootup-active::after {
   display: block;

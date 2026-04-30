@@ -201,7 +201,7 @@
         '<span class="bootup__line">&gt; MOUNTING MODULES: SAP / FRONTEND / MUSIC / PHOTO &nbsp;[OK]</span>' +
         '<span class="bootup__line">&gt; ESTABLISHING UPLINK ............ [OK]</span>' +
         '<span class="bootup__line">&gt; CALIBRATING PHOSPHOR DISPLAY .... [OK]</span>' +
-        '<span class="bootup__line">&gt; SYSTEM ONLINE_</span>' +
+        '<span class="bootup__line">&gt; SYSTEM ONLINE<span class="cursor-blink">_</span></span>' +
       '</pre>';
 
     if (showPicker) {
