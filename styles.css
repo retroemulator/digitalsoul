@@ -1087,7 +1087,7 @@ body.has-spotlight .spotlight {
   .spotlight { display: none; }
 }
 
-/* === CRT phosphor screen — scanlines always on === */
+/* === CRT phosphor screen — scanlines always on (subtle on site pages) === */
 body::before {
   content: "";
   position: fixed;
@@ -1096,8 +1096,8 @@ body::before {
   z-index: 80;
   background: repeating-linear-gradient(
     0deg,
-    rgba(0, 0, 0, 0.55),
-    rgba(0, 0, 0, 0.55) 1px,
+    rgba(0, 0, 0, 0.32),
+    rgba(0, 0, 0, 0.32) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -1240,6 +1240,44 @@ main a:focus-visible {
 body.crt-off.bootup-active::after {
   display: block;
 }
+
+/* Boot-up gets a much more pronounced "convex Pip-Boy" curvature */
+body.bootup-active::after {
+  border-radius: clamp(56px, 9vw, 120px);
+  box-shadow:
+    /* glowing lime edge ring around the simulated screen */
+    inset 0 0 0 2px rgba(204, 255, 0, 0.35),
+    inset 0 0 0 5px rgba(204, 255, 0, 0.1),
+    /* heavy darkening at edges to suggest the screen curving away */
+    inset 0 0 200px rgba(0, 0, 0, 0.95),
+    /* warm phosphor inner glow toward the center */
+    inset 0 0 380px rgba(204, 255, 0, 0.06),
+    /* outer "case" — fills outside the rounded shape with pure black */
+    0 0 0 100vmax #000;
+}
+
+/* Convex curvature illusion: radial vignette over the boot-up content
+   (bright at center, fading dark at the corners — fishbowl effect) */
+.bootup::after,
+.powerup::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+  background:
+    /* subtle highlight at top-center, like glass catching light */
+    radial-gradient(ellipse 70% 35% at 50% -10%, rgba(204, 255, 0, 0.06), transparent 65%),
+    /* main convex vignette — bright center, dark edges */
+    radial-gradient(
+      ellipse 95% 105% at center,
+      transparent 0%,
+      transparent 45%,
+      rgba(0, 0, 0, 0.35) 80%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+}
 .bootup.is-fading { opacity: 0; pointer-events: none; }
 .bootup--picker { cursor: default; }
 .bootup__lines {
@@ -1347,7 +1385,7 @@ body.crt-off.bootup-active::after {
   font-size: 0.7rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--color-fg-subtle);
+  color: var(--color-fg);
   opacity: 0;
   animation: bootup-line-in 0.4s ease 3.1s forwards;
 }
