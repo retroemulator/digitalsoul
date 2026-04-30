@@ -1233,44 +1233,101 @@ main a:focus-visible {
   color: var(--color-accent);
   text-shadow: var(--color-phosphor-glow);
 }
-/* === Boot-up "screen" — convex curved phosphor display around the content === */
-.bootup__screen {
+/* === Boot-up CRT monitor — outer dark plastic case (the "cornice") === */
+.bootup__monitor {
   position: relative;
   z-index: 3;
-  max-width: 48rem;
+  max-width: 54rem;
   width: 100%;
-  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.25rem, 4vw, 3rem);
-  border-radius: clamp(40px, 6vw, 80px);
-  background: radial-gradient(
-    ellipse 95% 100% at center,
-    rgba(204, 255, 0, 0.07) 0%,
-    transparent 22%,
-    rgba(0, 0, 0, 0.25) 55%,
-    rgba(0, 0, 0, 0.6) 82%,
-    rgba(0, 0, 0, 0.85) 100%
-  );
+  padding: clamp(1.25rem, 2.5vw, 2rem) clamp(1.25rem, 2.5vw, 2rem) clamp(2.25rem, 4vw, 3.25rem);
+  background:
+    linear-gradient(180deg, #1c1c20 0%, #131317 45%, #181820 100%);
+  border-radius: clamp(28px, 4vw, 52px);
   box-shadow:
-    /* glowing lime edge ring — the "phosphor alive" screen boundary */
-    inset 0 0 0 2px rgba(204, 255, 0, 0.45),
-    inset 0 0 0 6px rgba(204, 255, 0, 0.12),
-    /* inner soft dark to enhance the convex feel */
-    inset 0 0 80px rgba(0, 0, 0, 0.55),
-    /* outer drop shadow lifting the screen off the dark bg */
-    0 24px 60px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(204, 255, 0, 0.06);
+    /* top plastic highlight */
+    inset 0 2px 1px rgba(255, 255, 255, 0.07),
+    /* sides + bottom shadow on the case for plastic depth */
+    inset 0 -3px 6px rgba(0, 0, 0, 0.6),
+    inset 2px 0 4px rgba(0, 0, 0, 0.3),
+    inset -2px 0 4px rgba(0, 0, 0, 0.3),
+    /* outer drop shadow lifting the monitor off the bg */
+    0 30px 80px rgba(0, 0, 0, 0.8),
+    /* thin outer edge */
+    0 0 0 1px rgba(255, 255, 255, 0.04);
 }
-/* Glass highlight at top-center of the screen — sells the convex glass illusion */
+/* Subtle "power LED" dot at the bottom-right of the bezel */
+.bootup__monitor::before {
+  content: "";
+  position: absolute;
+  bottom: clamp(0.85rem, 1.5vw, 1.25rem);
+  right: clamp(1.5rem, 2.5vw, 2rem);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 8px rgba(204, 255, 0, 0.7), 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+/* === Boot-up phosphor screen — inner convex display === */
+.bootup__screen {
+  position: relative;
+  padding: clamp(1.5rem, 4vw, 2.75rem) clamp(1.25rem, 4vw, 2.75rem);
+  border-radius: clamp(18px, 2.6vw, 32px);
+  background:
+    /* convex phosphor vignette: bright center, dark edges */
+    radial-gradient(
+      ellipse 100% 100% at center,
+      rgba(204, 255, 0, 0.08) 0%,
+      transparent 22%,
+      rgba(0, 0, 0, 0.30) 60%,
+      rgba(0, 0, 0, 0.7) 88%,
+      rgba(0, 0, 0, 0.90) 100%
+    ),
+    /* base screen color */
+    #0a1410;
+  box-shadow:
+    /* thin lime edge marking the live display surface */
+    inset 0 0 0 1px rgba(204, 255, 0, 0.28),
+    /* inner shadow making the screen feel recessed into the bezel */
+    inset 0 6px 20px rgba(0, 0, 0, 0.85),
+    inset 0 -3px 12px rgba(0, 0, 0, 0.5),
+    inset 4px 0 12px rgba(0, 0, 0, 0.4),
+    inset -4px 0 12px rgba(0, 0, 0, 0.4);
+}
+/* Scanlines INSIDE the screen — overlay the boot content like a real CRT */
+.bootup__screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.55) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+/* Glass highlight at top of the screen — the convex curve catching light */
 .bootup__screen::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
+  z-index: 3;
   border-radius: inherit;
   background: radial-gradient(
-    ellipse 65% 26% at 50% -2%,
-    rgba(204, 255, 0, 0.12),
+    ellipse 70% 25% at 50% 0%,
+    rgba(204, 255, 0, 0.10),
     transparent 70%
   );
+}
+/* Boot content sits above bg, below scanlines */
+.bootup__screen > * {
+  position: relative;
+  z-index: 1;
 }
 .bootup.is-fading { opacity: 0; pointer-events: none; }
 .bootup--picker { cursor: default; }

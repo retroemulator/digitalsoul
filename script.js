@@ -329,7 +329,10 @@
       inner += '<span class="bootup__hint">click anywhere to continue</span>';
     }
 
-    overlay.innerHTML = '<div class="bootup__screen">' + inner + '</div>';
+    overlay.innerHTML =
+      '<div class="bootup__monitor">' +
+        '<div class="bootup__screen">' + inner + '</div>' +
+      '</div>';
     document.body.appendChild(overlay);
 
     let dismissed = false;
