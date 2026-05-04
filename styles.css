@@ -1210,60 +1210,25 @@ strong {
   align-items: flex-start;
 }
 .sidebar__copyright {
-  position: relative;
   margin: 1rem 0 0 0;
-  padding: 0.7rem 0.85rem;
+  padding: 0;
   font-family: var(--font-mono);
   font-size: 0.65rem;
   line-height: 1.5;
   letter-spacing: 0.05em;
   color: var(--color-fg-muted);
-  background: var(--color-bg-elevated);
-  border: 1px solid var(--color-border);
-  border-radius: 0.5rem;
   display: flex;
   align-items: flex-start;
-  gap: 0.65rem;
-  overflow: hidden;
-  transition: border-color var(--transition-default);
-}
-.sidebar__copyright::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    180deg,
-    transparent 0,
-    transparent 3px,
-    rgba(204, 255, 0, 0.025) 3px,
-    rgba(204, 255, 0, 0.025) 4px
-  );
-  pointer-events: none;
-  border-radius: inherit;
-}
-.sidebar__copyright:hover {
-  border-color: var(--color-accent);
+  gap: 0.4rem;
 }
 .sidebar__copyright-marker {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.55rem;
-  height: 1.55rem;
-  font-size: 0.85rem;
-  font-weight: 700;
   color: var(--color-accent);
-  background: rgba(204, 255, 0, 0.06);
-  border: 1px solid var(--color-accent);
-  border-radius: 50%;
+  font-size: 0.78rem;
+  font-weight: 400;
   flex-shrink: 0;
-  margin-top: 0.05rem;
-  text-shadow: 0 0 6px rgba(204, 255, 0, 0.5);
-  animation: copyright-radar 3.2s ease-out infinite;
+  line-height: 1.4;
 }
 .sidebar__copyright-text {
-  position: relative;
   line-height: 1.5;
 }
 .sidebar__copyright-text strong {
@@ -1271,14 +1236,6 @@ strong {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-}
-@keyframes copyright-radar {
-  0% { box-shadow: 0 0 0 0 rgba(204, 255, 0, 0.45); }
-  70% { box-shadow: 0 0 0 7px rgba(204, 255, 0, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(204, 255, 0, 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .sidebar__copyright-marker { animation: none; }
 }
 .footer__text {
   font-family: var(--font-mono);
