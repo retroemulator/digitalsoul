@@ -440,13 +440,6 @@
         const handle = card.querySelector('.ig-profile__handle');
         if (handle) handle.textContent = '@' + data.username;
       }
-      if (data.biography) {
-        const bio = card.querySelector('.ig-profile__bio');
-        if (bio) {
-          const firstLine = String(data.biography).split('\n')[0].trim();
-          if (firstLine) bio.textContent = firstLine;
-        }
-      }
       const animateCount = (el, target) => {
         if (!el || target == null) return;
         if (reduceMotion.matches) {
