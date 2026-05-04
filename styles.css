@@ -229,11 +229,16 @@ strong {
 }
 
 .sidebar__intro {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: var(--color-fg-muted);
-  max-width: 22rem;
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 0;
+  white-space: nowrap;
+}
+@media (max-width: 900px) {
+  .sidebar__intro {
+    white-space: normal;
+  }
 }
 .sidebar__contact {
   margin: 0.5rem 0 0 0;
