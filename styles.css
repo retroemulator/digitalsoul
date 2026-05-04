@@ -669,12 +669,33 @@ strong {
   text-shadow: 0 0 6px rgba(204, 255, 0, 0.6);
 }
 
+/* === Sidebar header (avatar + identity row) === */
+.sidebar__header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin: 0 0 1.5rem 0;
+}
+.sidebar__identity {
+  flex: 1;
+  min-width: 0;
+}
+.sidebar__identity .sidebar__name {
+  font-size: clamp(1.6rem, 3.2vw, 2.25rem);
+  margin: 0 0 0.35rem 0;
+  line-height: 1.1;
+}
+.sidebar__identity .sidebar__alias {
+  margin: 0;
+}
+
 /* === Sidebar avatar (Pip-Boy CRT screen) === */
 .sidebar__avatar {
   position: relative;
   width: 110px;
   height: 110px;
-  margin: 0 0 1.25rem 0;
+  margin: 0;
+  flex-shrink: 0;
   border-radius: 0.85rem;
   background: var(--color-bg);
   border: 1.5px solid var(--color-accent);
