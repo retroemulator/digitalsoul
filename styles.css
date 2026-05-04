@@ -1209,26 +1209,25 @@ strong {
   gap: 1rem;
   align-items: flex-start;
 }
-.footer__copyright {
+.sidebar__copyright {
   position: relative;
-  margin: 0;
-  padding: 0.85rem 1.1rem;
+  margin: 1rem 0 0 0;
+  padding: 0.7rem 0.85rem;
   font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
+  font-size: 0.65rem;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
   color: var(--color-fg-muted);
-  text-transform: uppercase;
   background: var(--color-bg-elevated);
   border: 1px solid var(--color-border);
-  border-radius: 0.55rem;
+  border-radius: 0.5rem;
   display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  width: 100%;
+  align-items: flex-start;
+  gap: 0.65rem;
   overflow: hidden;
   transition: border-color var(--transition-default);
 }
-.footer__copyright::before {
+.sidebar__copyright::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -1242,41 +1241,44 @@ strong {
   pointer-events: none;
   border-radius: inherit;
 }
-.footer__copyright:hover {
+.sidebar__copyright:hover {
   border-color: var(--color-accent);
 }
-.footer__copyright-marker {
+.sidebar__copyright-marker {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  font-size: 1.1rem;
+  width: 1.55rem;
+  height: 1.55rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: var(--color-accent);
   background: rgba(204, 255, 0, 0.06);
   border: 1px solid var(--color-accent);
   border-radius: 50%;
   flex-shrink: 0;
-  text-shadow: 0 0 8px rgba(204, 255, 0, 0.5);
+  margin-top: 0.05rem;
+  text-shadow: 0 0 6px rgba(204, 255, 0, 0.5);
   animation: copyright-radar 3.2s ease-out infinite;
 }
-.footer__copyright-text {
+.sidebar__copyright-text {
   position: relative;
   line-height: 1.5;
 }
-.footer__copyright-text strong {
+.sidebar__copyright-text strong {
   color: var(--color-fg);
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 @keyframes copyright-radar {
   0% { box-shadow: 0 0 0 0 rgba(204, 255, 0, 0.45); }
-  70% { box-shadow: 0 0 0 9px rgba(204, 255, 0, 0); }
+  70% { box-shadow: 0 0 0 7px rgba(204, 255, 0, 0); }
   100% { box-shadow: 0 0 0 0 rgba(204, 255, 0, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .footer__copyright-marker { animation: none; }
+  .sidebar__copyright-marker { animation: none; }
 }
 .footer__text {
   font-family: var(--font-mono);
