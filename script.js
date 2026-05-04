@@ -440,13 +440,7 @@
           if (!post.hashtags.includes(HASHTAG)) continue;
           const caption = post.prunedCaption || '';
           const permalink = post.permalink || PROFILE_URL;
-          if (post.mediaType === 'CAROUSEL_ALBUM' && Array.isArray(post.children)) {
-            for (const child of post.children) {
-              if (child && child.mediaType === 'IMAGE' && child.mediaUrl) {
-                items.push({ mediaUrl: child.mediaUrl, permalink, caption });
-              }
-            }
-          } else if (post.mediaType === 'IMAGE' && post.mediaUrl) {
+          if ((post.mediaType === 'IMAGE' || post.mediaType === 'CAROUSEL_ALBUM') && post.mediaUrl) {
             items.push({ mediaUrl: post.mediaUrl, permalink, caption });
           }
         }
