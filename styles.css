@@ -630,6 +630,27 @@ strong {
 .photo-grid__status a:focus-visible {
   border-bottom-color: var(--color-accent);
 }
+.photo-link--video {
+  position: relative;
+}
+.photo-link__badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding-left: 2px;
+  font-size: 0.7rem;
+  color: var(--color-accent);
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--color-accent);
+  border-radius: 50%;
+  pointer-events: none;
+  text-shadow: 0 0 6px rgba(204, 255, 0, 0.6);
+}
 .photo-link {
   display: block;
   position: relative;

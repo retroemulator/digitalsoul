@@ -146,6 +146,7 @@
     grid.addEventListener('click', (event) => {
       const link = event.target.closest('.photo-link');
       if (!link) return;
+      if (link.classList.contains('photo-link--external')) return;
       event.preventDefault();
       const inner = link.querySelector('img');
       openLightbox(link.getAttribute('href'), inner ? inner.getAttribute('alt') : '');
@@ -440,19 +441,33 @@
           if (!post.hashtags.includes(HASHTAG)) continue;
           const caption = post.prunedCaption || '';
           const permalink = post.permalink || PROFILE_URL;
-          if ((post.mediaType === 'IMAGE' || post.mediaType === 'CAROUSEL_ALBUM') && post.mediaUrl) {
-            items.push({ mediaUrl: post.mediaUrl, permalink, caption });
+          let thumb = null;
+          let isVideo = false;
+          if (post.mediaType === 'VIDEO') {
+            isVideo = true;
+            thumb = post.thumbnailUrl
+              || (post.sizes && post.sizes.medium && post.sizes.medium.mediaUrl)
+              || (post.sizes && post.sizes.large && post.sizes.large.mediaUrl)
+              || null;
+          } else if (post.mediaType === 'IMAGE' || post.mediaType === 'CAROUSEL_ALBUM') {
+            thumb = post.mediaUrl || null;
           }
+          if (!thumb) continue;
+          items.push({ thumb, permalink, caption, isVideo });
         }
         if (!items.length) {
           renderEmpty();
           return;
         }
-        grid.innerHTML = items.map((it) => (
-          '<li><a class="photo-link" href="' + escapeAttr(it.mediaUrl) + '" data-permalink="' + escapeAttr(it.permalink) + '" target="_blank" rel="noopener noreferrer">' +
-          '<img src="' + escapeAttr(it.mediaUrl) + '" alt="' + escapeAttr(it.caption) + '" loading="lazy">' +
-          '</a></li>'
-        )).join('');
+        grid.innerHTML = items.map((it) => {
+          const href = it.isVideo ? it.permalink : it.thumb;
+          const cls = 'photo-link' + (it.isVideo ? ' photo-link--video photo-link--external' : '');
+          const badge = it.isVideo ? '<span class="photo-link__badge" aria-hidden="true">▶</span>' : '';
+          return '<li><a class="' + cls + '" href="' + escapeAttr(href) + '" data-permalink="' + escapeAttr(it.permalink) + '" target="_blank" rel="noopener noreferrer">' +
+            '<img src="' + escapeAttr(it.thumb) + '" alt="' + escapeAttr(it.caption) + '" loading="lazy">' +
+            badge +
+            '</a></li>';
+        }).join('');
       })
       .catch(() => renderError());
   };
