@@ -651,6 +651,159 @@ strong {
   pointer-events: none;
   text-shadow: 0 0 6px rgba(204, 255, 0, 0.6);
 }
+
+/* === Instagram profile card === */
+.ig-profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  margin: 0 0 1rem 0;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  text-decoration: none;
+  color: var(--color-fg);
+  position: relative;
+  overflow: hidden;
+  transition: border-color var(--transition-default), transform var(--transition-default), box-shadow var(--transition-default);
+}
+.ig-profile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 3px,
+    rgba(204, 255, 0, 0.025) 3px,
+    rgba(204, 255, 0, 0.025) 4px
+  );
+  pointer-events: none;
+  border-radius: inherit;
+}
+.ig-profile:hover,
+.ig-profile:focus-visible {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 6px 28px rgba(204, 255, 0, 0.18);
+  outline: none;
+}
+.ig-profile__avatar-ring {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  padding: 3px;
+  background: conic-gradient(from 0deg, var(--color-accent), rgba(204, 255, 0, 0.25), var(--color-accent));
+  display: grid;
+  place-items: center;
+  position: relative;
+  animation: ig-ring-rotate 9s linear infinite;
+}
+.ig-profile__avatar-ring::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  box-shadow: 0 0 18px rgba(204, 255, 0, 0.35);
+  pointer-events: none;
+  animation: ig-ring-pulse 2.6s ease-in-out infinite;
+}
+.ig-profile__avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--color-bg);
+  object-fit: cover;
+  display: block;
+}
+.ig-profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+.ig-profile__handle {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--color-accent);
+  letter-spacing: 0.02em;
+  font-weight: 500;
+  text-shadow: 0 0 8px rgba(204, 255, 0, 0.25);
+}
+.ig-profile__bio {
+  font-size: 0.85rem;
+  color: var(--color-fg-muted);
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ig-profile__stats {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--color-fg-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.ig-profile__count {
+  color: var(--color-fg);
+  font-weight: 700;
+}
+.ig-profile__sep {
+  margin: 0 0.45rem;
+  opacity: 0.5;
+}
+.ig-profile__cta {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+.ig-profile__arrow {
+  display: inline-block;
+  transition: transform var(--transition-default);
+}
+.ig-profile:hover .ig-profile__arrow,
+.ig-profile:focus-visible .ig-profile__arrow {
+  transform: translateX(5px);
+}
+@keyframes ig-ring-rotate {
+  to { transform: rotate(360deg); }
+}
+@keyframes ig-ring-pulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ig-profile__avatar-ring,
+  .ig-profile__avatar-ring::after,
+  .ig-profile__arrow {
+    animation: none;
+    transition: none;
+  }
+}
+@media (max-width: 540px) {
+  .ig-profile {
+    flex-wrap: wrap;
+    padding: 0.85rem 1rem;
+  }
+  .ig-profile__cta {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.25rem;
+  }
+}
 .photo-link {
   display: block;
   position: relative;

@@ -428,6 +428,62 @@
       );
     };
 
+    const populateProfile = (data) => {
+      const card = document.querySelector('[data-instagram-profile]');
+      if (!card || !data) return;
+      const avatar = card.querySelector('.ig-profile__avatar');
+      if (avatar && data.profilePictureUrl) {
+        avatar.src = data.profilePictureUrl;
+        avatar.alt = data.username ? '@' + data.username : '';
+      }
+      if (data.username) {
+        const handle = card.querySelector('.ig-profile__handle');
+        if (handle) handle.textContent = '@' + data.username;
+      }
+      if (data.biography) {
+        const bio = card.querySelector('.ig-profile__bio');
+        if (bio) {
+          const firstLine = String(data.biography).split('\n')[0].trim();
+          if (firstLine) bio.textContent = firstLine;
+        }
+      }
+      const animateCount = (el, target) => {
+        if (!el || target == null) return;
+        if (reduceMotion.matches) {
+          el.textContent = String(target);
+          return;
+        }
+        const duration = 900;
+        const start = performance.now();
+        const tick = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = String(Math.round(target * eased));
+          if (t < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const followersEl = card.querySelector('[data-key="followers"]');
+      const followingEl = card.querySelector('[data-key="following"]');
+      const run = () => {
+        animateCount(followersEl, data.followersCount);
+        animateCount(followingEl, data.followsCount);
+      };
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              run();
+              obs.disconnect();
+            }
+          });
+        }, { threshold: 0.3 });
+        observer.observe(card);
+      } else {
+        run();
+      }
+    };
+
     fetch(FEED_URL, { mode: 'cors' })
       .then((r) => r.ok ? r.json() : Promise.reject(new Error('Feed HTTP ' + r.status)))
       .then((data) => {
@@ -435,6 +491,7 @@
           renderError();
           return;
         }
+        populateProfile(data);
         const items = [];
         for (const post of data.posts) {
           if (!post || !Array.isArray(post.hashtags)) continue;
