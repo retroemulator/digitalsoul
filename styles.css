@@ -235,6 +235,23 @@ strong {
   line-height: 1.6;
   margin: 0;
 }
+.sidebar__contact {
+  margin: 0.5rem 0 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+.sidebar__contact a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-fast), text-shadow var(--transition-fast);
+}
+.sidebar__contact a:hover,
+.sidebar__contact a:focus-visible {
+  border-bottom-color: var(--color-accent);
+  text-shadow: 0 0 8px rgba(204, 255, 0, 0.4);
+}
 
 /* === Sidebar navigation === */
 .sidebar__nav {
