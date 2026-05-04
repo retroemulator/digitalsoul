@@ -383,8 +383,8 @@ strong {
 
 .experience-item {
   display: grid;
-  grid-template-columns: 8rem 1fr;
-  gap: 1.5rem;
+  grid-template-columns: 9rem 1fr;
+  gap: 2.75rem;
   padding: 1rem;
   margin: 0 -1rem;
   border-radius: 0.5rem;
