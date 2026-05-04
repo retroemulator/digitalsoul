@@ -317,18 +317,18 @@
     if (showPicker) {
       inner +=
         '<div class="bootup__picker">' +
-          '<p class="bootup__picker-prompt">[ ! ] SELECT LANGUAGE</p>' +
+          '<p class="bootup__picker-prompt">[ ! ] SELEZIONA LINGUA · SELECT LANGUAGE</p>' +
           '<div class="bootup__picker-options">' +
-            '<button type="button" class="bootup__lang" data-lang="en">' +
-              '<span class="bootup__lang-key">[ 1 ]</span>' +
-              '<span class="bootup__lang-name">ENGLISH</span>' +
-            '</button>' +
             '<button type="button" class="bootup__lang" data-lang="it">' +
-              '<span class="bootup__lang-key">[ 2 ]</span>' +
+              '<span class="bootup__lang-key">[ 1 ]</span>' +
               '<span class="bootup__lang-name">ITALIANO</span>' +
             '</button>' +
+            '<button type="button" class="bootup__lang" data-lang="en">' +
+              '<span class="bootup__lang-key">[ 2 ]</span>' +
+              '<span class="bootup__lang-name">ENGLISH</span>' +
+            '</button>' +
           '</div>' +
-          '<p class="bootup__picker-hint">press 1 / 2 or click  ·  premi 1 / 2 o clicca</p>' +
+          '<p class="bootup__picker-hint">premi 1 / 2 o clicca  ·  press 1 / 2 or click</p>' +
         '</div>';
     } else {
       inner += '<span class="bootup__hint">click anywhere to continue</span>';
@@ -378,8 +378,8 @@
         });
       });
       const onKey = (e) => {
-        if (e.key === '1') { e.preventDefault(); choose('en'); }
-        else if (e.key === '2') { e.preventDefault(); choose('it'); }
+        if (e.key === '1') { e.preventDefault(); choose('it'); }
+        else if (e.key === '2') { e.preventDefault(); choose('en'); }
       };
       document.addEventListener('keydown', onKey);
     } else {
