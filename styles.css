@@ -1123,7 +1123,6 @@ body.crt-off::before {
   display: none;
 }
 body.crt-off .cursor-blink {
-  animation: none;
   color: var(--color-fg-muted);
   text-shadow: none;
 }
