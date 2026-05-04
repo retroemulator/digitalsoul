@@ -522,6 +522,49 @@
       .catch(() => renderError());
   };
 
+  /* === N. Mobile menu (hamburger overlay, mobile only) === */
+  const initMobileMenu = () => {
+    const hamburger = document.querySelector('.hamburger');
+    if (!hamburger) return;
+
+    const isItalian = (document.documentElement.lang || '').toLowerCase().startsWith('it');
+    const labels = isItalian
+      ? { open: 'Apri menu', close: 'Chiudi menu' }
+      : { open: 'Open menu', close: 'Close menu' };
+
+    const setOpen = (open) => {
+      document.body.classList.toggle('is-menu-open', open);
+      hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      hamburger.setAttribute('aria-label', open ? labels.close : labels.open);
+    };
+
+    hamburger.addEventListener('click', () => {
+      setOpen(!document.body.classList.contains('is-menu-open'));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.body.classList.contains('is-menu-open')) {
+        setOpen(false);
+        hamburger.focus();
+      }
+    });
+
+    document.querySelectorAll('.sidebar__menu .nav-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        if (document.body.classList.contains('is-menu-open')) setOpen(false);
+      });
+    });
+
+    const mql = window.matchMedia('(min-width: 1024px)');
+    const onChange = (ev) => {
+      if (ev.matches && document.body.classList.contains('is-menu-open')) {
+        setOpen(false);
+      }
+    };
+    if (mql.addEventListener) mql.addEventListener('change', onChange);
+    else if (mql.addListener) mql.addListener(onChange);
+  };
+
   /* === Boot === */
   onReady(() => {
     document.body.classList.add('js-ready');
@@ -532,5 +575,6 @@
     initLightbox();
     initFadeIn();
     initInstagramFeed();
+    initMobileMenu();
   });
 })();

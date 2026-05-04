@@ -52,6 +52,8 @@
             <span class="sidebar__contact-cta" aria-hidden="true">SAY HI</span>
           </a>
         </p>
+      </div>
+      <div class="sidebar__menu" id="sidebar-menu">
         <nav class="sidebar__nav" aria-label="Section navigation">
           <ul>
             <li><a href="#about" class="nav-link"><span class="nav-link__indicator" aria-hidden="true"></span><span class="nav-link__label">About</span></a></li>
@@ -61,8 +63,7 @@
             <li><a href="#photo" class="nav-link"><span class="nav-link__indicator" aria-hidden="true"></span><span class="nav-link__label">Photo</span></a></li>
           </ul>
         </nav>
-      </div>
-      <div class="sidebar__bottom">
+        <div class="sidebar__bottom">
         <div class="lang-switch" aria-label="Language">
           <a href="/it/" hreflang="it" class="lang-switch__link">IT</a>
           <span class="lang-switch__sep" aria-hidden="true">/</span>
@@ -112,12 +113,20 @@
           </button>
         </li>
       </ul>
-      <p class="sidebar__copyright">
-        <span class="sidebar__copyright-marker" aria-hidden="true">©</span>
-        <span class="sidebar__copyright-text"><strong>2026 · Luca Porfido</strong><br>All content on this site is property of the author.<br>Please don't reuse it without written permission.</span>
-      </p>
+        <p class="sidebar__copyright">
+          <span class="sidebar__copyright-marker" aria-hidden="true">©</span>
+          <span class="sidebar__copyright-text"><strong>2026 · Luca Porfido</strong><br>All content on this site is property of the author.<br>Please don't reuse it without written permission.</span>
+        </p>
+        </div>
       </div>
     </aside>
+    <button type="button" class="hamburger" aria-controls="sidebar-menu" aria-expanded="false" aria-label="Open menu">
+      <span class="hamburger__bars" aria-hidden="true">
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+      </span>
+    </button>
     <main id="main" class="content">
       <section id="about" class="section">
         <h2 class="section__heading section__heading--sticky-mobile">About</h2>
