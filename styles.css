@@ -609,6 +609,27 @@ strong {
 .photo-grid li {
   margin: 0;
 }
+.photo-grid__status {
+  grid-column: 1 / -1;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--color-fg-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-bg-elevated);
+}
+.photo-grid__status a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-fast);
+}
+.photo-grid__status a:hover,
+.photo-grid__status a:focus-visible {
+  border-bottom-color: var(--color-accent);
+}
 .photo-link {
   display: block;
   position: relative;

@@ -395,6 +395,74 @@
     };
   };
 
+  /* === N. Instagram feed (Behold JSON, hashtag-filtered) === */
+  const initInstagramFeed = () => {
+    const grid = document.querySelector('.photo-grid[data-instagram-feed]');
+    if (!grid) return;
+
+    const FEED_URL = 'https://feeds.behold.so/gK8hCJ9HUZXBTK6qq4T8';
+    const HASHTAG = 'digitalsoulph';
+    const PROFILE_URL = 'https://www.instagram.com/digitals0ulph/';
+    const isItalian = (document.documentElement.lang || '').toLowerCase().startsWith('it');
+
+    const escapeAttr = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+
+    const setStatus = (msg) => {
+      grid.innerHTML = '<li class="photo-grid__status">' + msg + '</li>';
+    };
+
+    const renderError = () => {
+      setStatus(isItalian
+        ? 'Impossibile caricare le foto. Visita <a href="' + PROFILE_URL + '" target="_blank" rel="noopener noreferrer">@digitals0ulph</a> su Instagram.'
+        : 'Couldn’t load photos. Visit <a href="' + PROFILE_URL + '" target="_blank" rel="noopener noreferrer">@digitals0ulph</a> on Instagram.'
+      );
+    };
+
+    const renderEmpty = () => {
+      setStatus(isItalian
+        ? 'Ancora nessuna foto con #' + HASHTAG + '. Vai a <a href="' + PROFILE_URL + '" target="_blank" rel="noopener noreferrer">@digitals0ulph</a>.'
+        : 'No photos tagged #' + HASHTAG + ' yet. Visit <a href="' + PROFILE_URL + '" target="_blank" rel="noopener noreferrer">@digitals0ulph</a>.'
+      );
+    };
+
+    fetch(FEED_URL, { mode: 'cors' })
+      .then((r) => r.ok ? r.json() : Promise.reject(new Error('Feed HTTP ' + r.status)))
+      .then((data) => {
+        if (!data || !Array.isArray(data.posts)) {
+          renderError();
+          return;
+        }
+        const items = [];
+        for (const post of data.posts) {
+          if (!post || !Array.isArray(post.hashtags)) continue;
+          if (!post.hashtags.includes(HASHTAG)) continue;
+          const caption = post.prunedCaption || '';
+          const permalink = post.permalink || PROFILE_URL;
+          if (post.mediaType === 'CAROUSEL_ALBUM' && Array.isArray(post.children)) {
+            for (const child of post.children) {
+              if (child && child.mediaType === 'IMAGE' && child.mediaUrl) {
+                items.push({ mediaUrl: child.mediaUrl, permalink, caption });
+              }
+            }
+          } else if (post.mediaType === 'IMAGE' && post.mediaUrl) {
+            items.push({ mediaUrl: post.mediaUrl, permalink, caption });
+          }
+        }
+        if (!items.length) {
+          renderEmpty();
+          return;
+        }
+        grid.innerHTML = items.map((it) => (
+          '<li><a class="photo-link" href="' + escapeAttr(it.mediaUrl) + '" data-permalink="' + escapeAttr(it.permalink) + '" target="_blank" rel="noopener noreferrer">' +
+          '<img src="' + escapeAttr(it.mediaUrl) + '" alt="' + escapeAttr(it.caption) + '" loading="lazy">' +
+          '</a></li>'
+        )).join('');
+      })
+      .catch(() => renderError());
+  };
+
   /* === Boot === */
   onReady(() => {
     document.body.classList.add('js-ready');
@@ -404,5 +472,6 @@
     initSpotlight();
     initLightbox();
     initFadeIn();
+    initInstagramFeed();
   });
 })();
