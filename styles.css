@@ -792,13 +792,37 @@ strong {
   width: 100%;
   border: 0;
 }
-.music-frame--hearthis {
-  margin-bottom: 0.5rem;
-}
 .music-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1rem;
+}
+.music-grid--hearthis {
+  grid-template-columns: 1fr;
+  gap: 0.6rem;
+}
+@media (min-width: 720px) {
+  .music-grid--hearthis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.music-cta {
+  margin: 0.85rem 0 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-align: right;
+}
+.music-cta a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-fast), text-shadow var(--transition-fast);
+}
+.music-cta a:hover,
+.music-cta a:focus-visible {
+  border-bottom-color: var(--color-accent);
+  text-shadow: 0 0 8px rgba(204, 255, 0, 0.4);
 }
 
 /* === Photo grid === */
