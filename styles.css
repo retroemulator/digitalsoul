@@ -652,6 +652,92 @@ strong {
   text-shadow: 0 0 6px rgba(204, 255, 0, 0.6);
 }
 
+/* === Sidebar avatar (Pip-Boy CRT screen) === */
+.sidebar__avatar {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  margin: 0 0 1.25rem 0;
+  border-radius: 0.85rem;
+  background: var(--color-bg);
+  border: 1.5px solid var(--color-accent);
+  box-shadow:
+    0 0 0 1px rgba(204, 255, 0, 0.12),
+    0 0 14px rgba(204, 255, 0, 0.22),
+    inset 0 0 30px rgba(204, 255, 0, 0.12);
+  overflow: hidden;
+  transition: box-shadow var(--transition-default), transform var(--transition-default);
+}
+.sidebar__avatar-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+  filter: contrast(1.05) brightness(1.05) saturate(0.95);
+  transition: transform var(--transition-default), filter var(--transition-default);
+}
+.sidebar__avatar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0,
+    transparent 2px,
+    rgba(0, 0, 0, 0.22) 2px,
+    rgba(0, 0, 0, 0.22) 3px
+  );
+  pointer-events: none;
+  z-index: 3;
+  mix-blend-mode: multiply;
+  border-radius: inherit;
+}
+.sidebar__avatar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 35%, transparent 0%, transparent 55%, rgba(0, 0, 0, 0.5) 100%),
+    linear-gradient(180deg, transparent 0%, rgba(204, 255, 0, 0.18) 50%, transparent 100%);
+  background-size: 100% 100%, 100% 25%;
+  background-position: 0 0, 0 -25%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 4;
+  border-radius: inherit;
+  animation: sidebar-avatar-scan 7s linear infinite;
+}
+@keyframes sidebar-avatar-scan {
+  0% { background-position: 0 0, 0 -25%; }
+  100% { background-position: 0 0, 0 130%; }
+}
+.sidebar__avatar:hover {
+  box-shadow:
+    0 0 0 1px rgba(204, 255, 0, 0.35),
+    0 0 26px rgba(204, 255, 0, 0.55),
+    inset 0 0 50px rgba(204, 255, 0, 0.25);
+  transform: translateY(-2px);
+}
+.sidebar__avatar:hover .sidebar__avatar-img {
+  transform: scale(1.06);
+  filter: contrast(1.12) brightness(1.18) saturate(1) drop-shadow(2px 0 0 rgba(255, 0, 100, 0.55)) drop-shadow(-2px 0 0 rgba(0, 240, 255, 0.55));
+  animation: sidebar-avatar-glitch 0.18s steps(2, end) infinite;
+}
+@keyframes sidebar-avatar-glitch {
+  0%   { clip-path: inset(0 0 0 0); transform: scale(1.06) translate(0, 0); }
+  20%  { clip-path: inset(8% 0 60% 0); transform: scale(1.06) translate(-1px, 1px); }
+  40%  { clip-path: inset(0 0 0 0); transform: scale(1.06) translate(1px, -1px); }
+  60%  { clip-path: inset(45% 0 25% 0); transform: scale(1.06) translate(-1px, -1px); }
+  80%  { clip-path: inset(0 0 0 0); transform: scale(1.06) translate(1px, 1px); }
+  100% { clip-path: inset(0 0 0 0); transform: scale(1.06) translate(0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sidebar__avatar::after { animation: none; }
+  .sidebar__avatar:hover .sidebar__avatar-img { animation: none; transform: none; filter: contrast(1.1) brightness(1.1); }
+}
+
 /* === Instagram profile card === */
 .ig-profile {
   display: flex;
