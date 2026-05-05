@@ -1314,6 +1314,10 @@ body.crt-off .crt-toggle {
   body.is-menu-open .crt-toggle--floating {
     display: none;
   }
+  body.bootup-active .crt-toggle--floating,
+  body.bootup-active .hamburger {
+    display: none;
+  }
   /* Override the bouncy 'attention' animation on mobile floating button — use a shine sweep instead */
   .crt-toggle--floating.crt-toggle--attention {
     animation: none;
