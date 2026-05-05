@@ -5,21 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>404 — DiGiT@L SouL</title>
   <meta name="description" content="Page not found.">
-  <meta name="theme-color" content="#0A0A0F">
+  <meta name="theme-color" content="#0A1410">
   <meta name="robots" content="noindex">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="alternate icon" href="favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/styles.css">
 </head>
 <body class="page-404">
   <main class="not-found">
-    <p class="not-found__kicker">Error 404</p>
-    <h1 class="not-found__code">404</h1>
-    <p class="not-found__message">This page got lost in the mix.</p>
-    <p class="not-found__cta"><a href="/">← Back home</a></p>
+    <p class="not-found__kicker" aria-hidden="true">[ ! ] SIGNAL LOST · ROUTE NOT FOUND</p>
+    <div class="not-found__hero">
+      <span class="not-found__glitch" data-text="404" aria-hidden="true">404</span>
+    </div>
+    <h1 class="not-found__title">This page got lost in the mix.</h1>
+    <pre class="not-found__diagnostic" aria-label="Error diagnostic">&gt; ATTEMPTED PATH: <span class="diag-path">/&lt;unknown&gt;</span>
+&gt; ERROR CODE:     0x0404
+&gt; STATUS:         FILE_NOT_FOUND
+&gt; SUGGESTION:     RETURN TO BASE<span class="cursor-blink" aria-hidden="true">_</span></pre>
+    <div class="not-found__actions">
+      <a href="/" class="not-found__cta not-found__cta--primary" data-home>← Back home</a>
+      <a href="mailto:retroemulator01@gmail.com" class="not-found__cta">Send a signal</a>
+    </div>
   </main>
+  <span class="not-found__scan" aria-hidden="true"></span>
+  <script>
+    (function () {
+      try {
+        var path = window.location.pathname || '/';
+        var search = window.location.search || '';
+        var pathEl = document.querySelector('.diag-path');
+        if (pathEl) pathEl.textContent = path + search;
+        if (path.toLowerCase().indexOf('/it/') === 0) {
+          document.documentElement.lang = 'it';
+          document.title = '404 — DiGiT@L SouL';
+          var kicker = document.querySelector('.not-found__kicker');
+          if (kicker) kicker.textContent = '[ ! ] SEGNALE PERSO · ROTTA NON TROVATA';
+          var title = document.querySelector('.not-found__title');
+          if (title) title.textContent = 'Questa pagina si è persa nel mix.';
+          var diag = document.querySelector('.not-found__diagnostic');
+          if (diag) diag.innerHTML = '&gt; PERCORSO RICHIESTO: <span class="diag-path">' + (path + search).replace(/[<>&"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }) + '</span>\n&gt; CODICE ERRORE:      0x0404\n&gt; STATO:              FILE_NON_TROVATO\n&gt; SUGGERIMENTO:       TORNA ALLA BASE<span class="cursor-blink" aria-hidden="true">_</span>';
+          var home = document.querySelector('[data-home]');
+          if (home) { home.href = '/it/'; home.textContent = '← Torna alla home'; }
+          var contact = document.querySelectorAll('.not-found__cta')[1];
+          if (contact) contact.textContent = 'Manda un segnale';
+        }
+      } catch (e) {}
+    })();
+  </script>
 </body>
 </html>

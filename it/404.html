@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 — DiGiT@L SouL</title>
+  <meta name="description" content="Pagina non trovata.">
+  <meta name="theme-color" content="#0A1410">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="page-404">
+  <main class="not-found">
+    <p class="not-found__kicker" aria-hidden="true">[ ! ] SEGNALE PERSO · ROTTA NON TROVATA</p>
+    <div class="not-found__hero">
+      <span class="not-found__glitch" data-text="404" aria-hidden="true">404</span>
+    </div>
+    <h1 class="not-found__title">Questa pagina si è persa nel mix.</h1>
+    <pre class="not-found__diagnostic" aria-label="Diagnostica errore">&gt; PERCORSO RICHIESTO: <span class="diag-path">/&lt;sconosciuto&gt;</span>
+&gt; CODICE ERRORE:      0x0404
+&gt; STATO:              FILE_NON_TROVATO
+&gt; SUGGERIMENTO:       TORNA ALLA BASE<span class="cursor-blink" aria-hidden="true">_</span></pre>
+    <div class="not-found__actions">
+      <a href="/it/" class="not-found__cta not-found__cta--primary">← Torna alla home</a>
+      <a href="mailto:retroemulator01@gmail.com" class="not-found__cta">Manda un segnale</a>
+    </div>
+  </main>
+  <span class="not-found__scan" aria-hidden="true"></span>
+  <script>
+    (function () {
+      try {
+        var path = window.location.pathname || '/it/';
+        var search = window.location.search || '';
+        var pathEl = document.querySelector('.diag-path');
+        if (pathEl) pathEl.textContent = path + search;
+      } catch (e) {}
+    })();
+  </script>
+</body>
+</html>
