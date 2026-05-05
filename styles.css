@@ -1314,6 +1314,46 @@ body.crt-off .crt-toggle {
   body.is-menu-open .crt-toggle--floating {
     display: none;
   }
+  /* Override the bouncy 'attention' animation on mobile floating button — use a shine sweep instead */
+  .crt-toggle--floating.crt-toggle--attention {
+    animation: none;
+    overflow: hidden;
+  }
+  .crt-toggle--floating.crt-toggle--attention::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      110deg,
+      transparent 0%,
+      transparent 30%,
+      rgba(204, 255, 0, 0.55) 50%,
+      transparent 70%,
+      transparent 100%
+    );
+    transform: translateX(-100%);
+    animation: crt-toggle-shine 3s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .crt-toggle--floating svg {
+    position: relative;
+    z-index: 1;
+  }
+  @keyframes crt-toggle-shine {
+    0%   { transform: translateX(-100%); }
+    30%  { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .crt-toggle--floating.crt-toggle--attention::before {
+    animation: none;
+    opacity: 0;
+  }
 }
 /* Attention animation: a clear, multi-bounce pulse until the user clicks the toggle for the first time */
 .crt-toggle--attention {
