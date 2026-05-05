@@ -20,7 +20,7 @@
     <div class="not-found__hero">
       <span class="not-found__glitch" data-text="404" aria-hidden="true">404</span>
     </div>
-    <h1 class="not-found__title">Connection refused. Endpoint offline.</h1>
+    <h1 class="not-found__title">Looks like this page has gone offline.</h1>
     <pre class="not-found__diagnostic" aria-label="Error diagnostic">&gt; ATTEMPTED PATH: <span class="diag-path">/&lt;unknown&gt;</span>
 &gt; ERROR CODE:     0x0404
 &gt; STATUS:         FILE_NOT_FOUND
@@ -44,7 +44,7 @@
           var kicker = document.querySelector('.not-found__kicker');
           if (kicker) kicker.textContent = '[ ! ] SEGNALE PERSO · ROTTA NON TROVATA';
           var title = document.querySelector('.not-found__title');
-          if (title) title.textContent = 'Connessione rifiutata. Endpoint offline.';
+          if (title) title.textContent = 'Sembra che questa pagina sia andata offline.';
           var diag = document.querySelector('.not-found__diagnostic');
           if (diag) diag.innerHTML = '&gt; PERCORSO RICHIESTO: <span class="diag-path">' + (path + search).replace(/[<>&"']/g, function (c) { return '&#' + c.charCodeAt(0) + ';'; }) + '</span>\n&gt; CODICE ERRORE:      0x0404\n&gt; STATO:              FILE_NON_TROVATO\n&gt; SUGGERIMENTO:       TORNA ALLA BASE<span class="cursor-blink" aria-hidden="true">_</span>';
           var home = document.querySelector('[data-home]');
