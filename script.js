@@ -307,7 +307,7 @@
     let inner =
       '<pre class="bootup__lines">' +
         '<span class="bootup__line">&gt; INITIALIZING DIGITAL_SOUL.OS v2.6 ...</span>' +
-        '<span class="bootup__line">&gt; LOADING USER PROFILE: LUCA_PORFIDO &nbsp;[OK]</span>' +
+        '<span class="bootup__line">&gt; LOADING USER PROFILE: DIGIT@L_SOUL &nbsp;[OK]</span>' +
         '<span class="bootup__line">&gt; MOUNTING MODULES: SYSADMIN / WEBDEV / MUSIC / PHOTO &nbsp;[OK]</span>' +
         '<span class="bootup__line">&gt; ESTABLISHING UPLINK ............ [OK]</span>' +
         '<span class="bootup__line">&gt; CALIBRATING PHOSPHOR DISPLAY .... [OK]</span>' +
