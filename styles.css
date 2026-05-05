@@ -1281,6 +1281,40 @@ body.crt-off .crt-toggle {
   color: var(--color-fg-muted);
   text-shadow: none;
 }
+
+/* Floating CRT toggle (mobile only, fixed top-right under hamburger) */
+.crt-toggle--floating {
+  display: none;
+}
+@media (max-width: 1023px) {
+  .crt-toggle--floating {
+    position: fixed;
+    top: calc(1.1rem + 44px + 0.5rem);
+    right: 1.1rem;
+    z-index: 109;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-accent);
+    border-radius: 0.5rem;
+    box-shadow: 0 0 0 1px rgba(204, 255, 0, 0.08), 0 0 12px rgba(204, 255, 0, 0.22);
+  }
+  .crt-toggle--floating:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-accent), 0 0 18px rgba(204, 255, 0, 0.4);
+  }
+  body.crt-off .crt-toggle--floating {
+    border-color: var(--color-border);
+    box-shadow: none;
+  }
+  body.is-menu-open .crt-toggle--floating {
+    display: none;
+  }
+}
 /* Attention animation: a clear, multi-bounce pulse until the user clicks the toggle for the first time */
 .crt-toggle--attention {
   animation: crt-toggle-attention 2.4s ease-out infinite;
