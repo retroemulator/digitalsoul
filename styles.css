@@ -831,7 +831,68 @@ strong {
   text-shadow: 0 0 8px rgba(204, 255, 0, 0.4);
 }
 
-/* === Photo grid === */
+/* === Photo mosaic (static masonry gallery, CSS columns) === */
+.photo-mosaic {
+  column-count: 3;
+  column-gap: 0.75rem;
+}
+@media (max-width: 900px) {
+  .photo-mosaic { column-count: 2; }
+}
+@media (max-width: 540px) {
+  .photo-mosaic { column-count: 1; }
+}
+.photo-item {
+  break-inside: avoid;
+  margin: 0 0 1.25rem;
+  padding: 0;
+}
+.photo-item .photo-link {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0.25rem;
+  aspect-ratio: auto;
+  transition: filter var(--transition-default), transform var(--transition-default);
+}
+.photo-item .photo-link:hover,
+.photo-item .photo-link:focus-visible {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+.photo-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+}
+.photo-caption {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--color-fg-muted);
+}
+.photo-cta {
+  margin: 1.5rem 0 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+.photo-cta a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--transition-fast), text-shadow var(--transition-fast);
+}
+.photo-cta a:hover,
+.photo-cta a:focus-visible {
+  border-bottom-color: var(--color-accent);
+  text-shadow: 0 0 8px rgba(204, 255, 0, 0.4);
+}
+
+/* === Photo grid (legacy, kept for reference) === */
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
